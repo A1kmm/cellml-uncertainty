@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "docbookx.dtd">
+<article lang="en">
+<articleinfo>
+  <title>Representing uncertainty in CellML : Unofficial working draft</title>
+</articleinfo>
+<section>
+  <title>Application to CellML</title>
+  <para>
+    This document describes how existing facilities in CellML can be used to describe uncertainty about parameter values in a mathematical model.
+  </para>
+  <para>
+    Because it uses standard MathML, through the csymbol mechanism, it is possible for models to be coded up according to these guidelines and still comply with the CellML 1.0 and CellML 1.1 specification. It is likely that some of the material in this specification could become a CellML 1.2 secondary specification.
+  </para>
+</section>
+<section>
+  <title>Definition and statistical model of parameter uncertainty</title>
+  <para>
+    In this specification, parameter uncertainty describes the situation where a parameter has a true value, but that true value is unknown for some reason. Parameter uncertainty can arise for a number of reasons; the following is a non-exhaustive list (and more than one of the below can and often will apply):
+    <orderedlist>
+      <listitem><para>The parameter was measured, but due to measurement error, the measurements taken do not give an exact value.</para></listitem>
+      <listitem><para>No data on a parameter is available, so only a rough estimate, with inherent uncertainty is known.</para></listitem>
+      <listitem><para>The parameter is the value for a particular individual from a population; the distribution of values over the population is known, but the specific value for the individual is not known (note: individual and population are intended in the broadest sense possible; it could refer to anything from an individual molecule from a population of molecules to an individual planet from a population of planets).</para></listitem>
+    </orderedlist>
+  </para>
+  <para>
+    In this specification, a Bayesian approach is taken to describe parameter uncertainty. Uncertain parameters are represented using a random variable, distributed according to some distribution. Given all available data D, the probability that an uncertain parameter X has value x is represented by a function of x, <math xmlns='http://www.w3.org/1998/Math/MathML' display='inline'><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false">(</mo><mi>X</mi><mo>=</mo><mi>x</mi><mo stretchy="false">|</mo><mi>D</mi><mo stretchy="false">)</mo></math>.
+  </para>
+  <para>
+    The probabilities represented are posterior probabilities; that is, they are the probability that the true value of the parameter is equal to a particular value, given all data observed. They are not likelihood values (that is, they are not the probability of seeing the data given the parameters).
+  </para>
+  <para>
+    There are two mechanisms proposed in this specification for representing distributions. The first is by direct representation of the probability density function, and the second is by giving a sufficiently large number of samples from the parameter distribution (each sample is called a realisation).
+  </para>
+  <para>
+    It is anticipated that it will often be the case that two or more parameters are non-independent, and so it is necessary to describe how they are related. This can be done either by providing joint realisations for more than one parameter at the same time, or by making one uncertain variable parameter affect the parameters of the probability distribution of another parameter (making the second probability distribution conditional on the first distribution).
+  </para>
+</section>
+<section>
+  <title>The uncertParWithDist operator</title>
+  <para>
+    The following MathML csymbol definition URL is declared to exist: <uri>http://www.cellml.org/uncert1#uncertParWithDist</uri>. It may be used as the operator child of a MathML apply element that is the child of a MathML math element, that is in turn the child of a CellML component element.
+  </para>
+  <para>
+    The operator takes two parameters. The first parameter shall be a MathML &lt;ci&gt; element, naming the variable corresponding to the uncertain parameter (or alternatively, may be a vector of such &lt;ci&gt; elements). The second parameter shall describe the distribution for that parameter, using one of the mechanisms discussed below.
+  </para>
+  <para>
+    The meaning of the operator shall be that the variable represented by the first parameter shall have the distribution described by the second parameter.
+  </para>
+</section>
+
+<section>
+  <title>The distFromDensity operator</title>
+  <para>
+    The following MathML csymbol definition URL is declared to exist: <uri>http://www.cellml.org/uncert1#distFromDensity</uri>.
+  </para>
+  <para>
+    The operator takes one parameter, which shall be a function of one parameter.
+  </para>
+  <para>
+    The semantics of the operator shall be that a distribution is described in terms of the probability density function that is given as the first parameter.
+  </para>
+</section>
+
+<section>
+  <title>The distFromRealisations operator</title>
+  <para>
+    The following MathML csymbol definition URL is declared to exist: "http://www.cellml.org/uncert1#distFromRealisations".
+  </para>
+  <para>
+    The operator takes one parameter, which shall be a vector.
+  </para>
+  <para>
+    The semantics of the operator shall be that a distribution is described in terms of a vector of realisations. The vector may contain either scalar values representing samples from the uncertainty distribution for a single parameter, or vectors of scalars from the joint distribution over multiple uncertain parameters.
+  </para>
+</section>
+
+<section>
+  <title>Example 1</title>
+  <screen><![CDATA[
+<model xmlns="http://www.cellml.org/cellml/1.1#">
+  <component name="myComponent">
+    <variable name="myUncertainVar" units="mmol" />
+    <variable name="muvVariance" value="1" units="mmol2">
+    <variable name="muvMean" value="100" units="mmol">
+    <!-- used as a bound variable only -->
+    <variable name="x" units="dimensionless" />
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <apply>
+    <csymbol definitionURL=
+       "http://www.cellml.org/uncert1#uncertParWithDist"/>
+    <ci>myUncertainVar</ci>
+    <apply>
+      <csymbol definitionURL=
+        "http://www.cellml.org/uncert1#distFromDensity"/>
+      <lambda>
+        <bvar>x</bvar>
+        <apply><times/>
+          <apply><div/><cn units="dimensionless">1</cn>
+            <apply><sqrt/>
+              <apply><times/>
+                <cn units="dimensionless">2</cn>
+                <pi/>
+                <ci>muvVariance</ci>
+              </apply>
+            </apply>
+          </apply>
+          <apply><exp/>
+            <apply><minus/>
+              <apply><divide/>
+                <apply><power/>
+                  <apply><minus/>
+                    <ci>x</ci><ci>muvMean</ci>
+                  </apply>
+                  <cn units="dimensionless">2</cn>
+                </apply>
+                <apply><times/>
+                  <cn units="dimensionless">2</cn>
+                  <ci>muvVariance</ci>
+                </apply>
+              </apply>
+            </apply>
+          </apply>
+        </apply>
+      </lambda>
+    </apply>
+  </apply>
+</math>
+  </component>
+  <units name="mmol">
+    <unit name="mole" prefix="milli"/>
+  </units>
+  <units name="mmol2">
+    <unit name="mole" prefix="milli" exponent="2"/>
+  </units>
+</model>
+]]></screen>
+</section>
+
+<section>
+  <title>Example 2</title>
+  <screen><![CDATA[
+<model xmlns="http://www.cellml.org/cellml/1.1#">
+  <component name="myComponent">
+    <variable name="myUncertainVar1" units="mmol" />
+    <variable name="myUncertainVar2" units="mmol" />
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <apply>
+    <csymbol definitionURL=
+      "http://www.cellml.org/uncert1#uncertParWithDist"/>
+    <vector>
+      <ci>myUncertainVar1</ci>
+      <ci>myUncertainVar2</ci>
+    </vector>
+    <apply>
+      <csymbol definitionURL=
+        "http://www.cellml.org/uncert1#distFromRealisations"/>
+      <vector>
+<vector><ci>95.955908</ci><ci>194.757993</ci></vector>
+<vector><ci>105.603820</ci><ci>203.808066</ci></vector>
+<vector><ci>100.718858</ci><ci>206.706151</ci></vector>
+<vector><ci>106.242517</ci><ci>207.960578</ci></vector>
+<vector><ci>93.885181</ci><ci>202.142459</ci></vector>
+<vector><ci>96.684373</ci><ci>208.131092</ci></vector>
+<vector><ci>111.892309</ci><ci>209.065506</ci></vector>
+<vector><ci>97.934903</ci><ci>196.563091</ci></vector>
+<vector><ci>93.610101</ci><ci>184.053900</ci></vector>
+<vector><ci>100.017601</ci><ci>203.956891</ci></vector>
+<vector><ci>104.661797</ci><ci>212.659437</ci></vector>
+<vector><ci>94.717419</ci><ci>212.040720</ci></vector>
+<vector><ci>106.113691</ci><ci>215.722901</ci></vector>
+<vector><ci>102.165401</ci><ci>200.936588</ci></vector>
+<vector><ci>101.105097</ci><ci>215.538148</ci></vector>
+<vector><ci>86.452295</ci><ci>174.432827</ci></vector>
+<vector><ci>105.852376</ci><ci>219.470806</ci></vector>
+<vector><ci>97.055510</ci><ci>202.784736</ci></vector>
+<vector><ci>87.275791</ci><ci>178.905540</ci></vector>
+<vector><ci>104.656642</ci><ci>201.548261</ci></vector>
+<vector><ci>90.708908</ci><ci>179.354500</ci></vector>
+<vector><ci>106.636560</ci><ci>206.118002</ci></vector>
+<!-- Only a small number of realisations given for brevity;
+     in a real model, far more would probably be given. -->
+      </vector>
+    </apply>
+  </apply>
+</math>
+  </component>
+  <units name="mmol">
+    <unit name="mole" prefix="milli"/>
+  </units>
+</model>
+]]></screen>
+</section>
+
+</article>
