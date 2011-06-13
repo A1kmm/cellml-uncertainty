@@ -147,7 +147,8 @@
     This example describes two correlated, uncertain variables for which the probability density function is not given; instead, a series of samples (realisations) from the distribution are provided. In a real model, it would be desirable to provide more realisations than are provided here.
   </para>
   <screen><![CDATA[
-<model xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+<model xmlns="http://www.cellml.org/cellml/1.1#"
+       xmlns:cellml="http://www.cellml.org/cellml/1.1#">
   <component name="myComponent">
     <variable name="myUncertainVar1" units="mmol" />
     <variable name="myUncertainVar2" units="mmol" />
@@ -163,28 +164,50 @@
       <csymbol definitionURL=
         "http://www.cellml.org/uncert1#distFromRealisations"/>
       <vector>
-<vector><cn cellml:units="mmol">95.955908</cn><cn cellml:units="mmol">194.757993</cn></vector>
-<vector><cn cellml:units="mmol">105.603820</cn><cn cellml:units="mmol">203.808066</cn></vector>
-<vector><cn cellml:units="mmol">100.718858</cn><cn cellml:units="mmol">206.706151</cn></vector>
-<vector><cn cellml:units="mmol">106.242517</cn><cn cellml:units="mmol">207.960578</cn></vector>
-<vector><cn cellml:units="mmol">93.885181</cn><cn cellml:units="mmol">202.142459</cn></vector>
-<vector><cn cellml:units="mmol">96.684373</cn><cn cellml:units="mmol">208.131092</cn></vector>
-<vector><cn cellml:units="mmol">111.892309</cn><cn cellml:units="mmol">209.065506</cn></vector>
-<vector><cn cellml:units="mmol">97.934903</cn><cn cellml:units="mmol">196.563091</cn></vector>
-<vector><cn cellml:units="mmol">93.610101</cn><cn cellml:units="mmol">184.053900</cn></vector>
-<vector><cn cellml:units="mmol">100.017601</cn><cn cellml:units="mmol">203.956891</cn></vector>
-<vector><cn cellml:units="mmol">104.661797</cn><cn cellml:units="mmol">212.659437</cn></vector>
-<vector><cn cellml:units="mmol">94.717419</cn><cn cellml:units="mmol">212.040720</cn></vector>
-<vector><cn cellml:units="mmol">106.113691</cn><cn cellml:units="mmol">215.722901</cn></vector>
-<vector><cn cellml:units="mmol">102.165401</cn><cn cellml:units="mmol">200.936588</cn></vector>
-<vector><cn cellml:units="mmol">101.105097</cn><cn cellml:units="mmol">215.538148</cn></vector>
-<vector><cn cellml:units="mmol">86.452295</cn><cn cellml:units="mmol">174.432827</cn></vector>
-<vector><cn cellml:units="mmol">105.852376</cn><cn cellml:units="mmol">219.470806</cn></vector>
-<vector><cn cellml:units="mmol">97.055510</cn><cn cellml:units="mmol">202.784736</cn></vector>
-<vector><cn cellml:units="mmol">87.275791</cn><cn cellml:units="mmol">178.905540</cn></vector>
-<vector><cn cellml:units="mmol">104.656642</cn><cn cellml:units="mmol">201.548261</cn></vector>
-<vector><cn cellml:units="mmol">90.708908</cn><cn cellml:units="mmol">179.354500</cn></vector>
-<vector><cn cellml:units="mmol">106.636560</cn><cn cellml:units="mmol">206.118002</cn></vector>
+<vector><cn cellml:units="mmol">95.955908</cn>
+  <cn cellml:units="mmol">194.757993</cn></vector>
+<vector><cn cellml:units="mmol">105.603820</cn>
+  <cn cellml:units="mmol">203.808066</cn></vector>
+<vector><cn cellml:units="mmol">100.718858</cn>
+  <cn cellml:units="mmol">206.706151</cn></vector>
+<vector><cn cellml:units="mmol">106.242517</cn>
+  <cn cellml:units="mmol">207.960578</cn></vector>
+<vector><cn cellml:units="mmol">93.885181</cn>
+  <cn cellml:units="mmol">202.142459</cn></vector>
+<vector><cn cellml:units="mmol">96.684373</cn>
+  <cn cellml:units="mmol">208.131092</cn></vector>
+<vector><cn cellml:units="mmol">111.892309</cn>
+  <cn cellml:units="mmol">209.065506</cn></vector>
+<vector><cn cellml:units="mmol">97.934903</cn>
+  <cn cellml:units="mmol">196.563091</cn></vector>
+<vector><cn cellml:units="mmol">93.610101</cn>
+  <cn cellml:units="mmol">184.053900</cn></vector>
+<vector><cn cellml:units="mmol">100.017601</cn>
+  <cn cellml:units="mmol">203.956891</cn></vector>
+<vector><cn cellml:units="mmol">104.661797</cn>
+  <cn cellml:units="mmol">212.659437</cn></vector>
+<vector><cn cellml:units="mmol">94.717419</cn>
+  <cn cellml:units="mmol">212.040720</cn></vector>
+<vector><cn cellml:units="mmol">106.113691</cn>
+  <cn cellml:units="mmol">215.722901</cn></vector>
+<vector><cn cellml:units="mmol">102.165401</cn>
+  <cn cellml:units="mmol">200.936588</cn></vector>
+<vector><cn cellml:units="mmol">101.105097</cn>
+  <cn cellml:units="mmol">215.538148</cn></vector>
+<vector><cn cellml:units="mmol">86.452295</cn>
+  <cn cellml:units="mmol">174.432827</cn></vector>
+<vector><cn cellml:units="mmol">105.852376</cn>
+  <cn cellml:units="mmol">219.470806</cn></vector>
+<vector><cn cellml:units="mmol">97.055510</cn>
+  <cn cellml:units="mmol">202.784736</cn></vector>
+<vector><cn cellml:units="mmol">87.275791</cn>
+  <cn cellml:units="mmol">178.905540</cn></vector>
+<vector><cn cellml:units="mmol">104.656642</cn>
+  <cn cellml:units="mmol">201.548261</cn></vector>
+<vector><cn cellml:units="mmol">90.708908</cn>
+  <cn cellml:units="mmol">179.354500</cn></vector>
+<vector><cn cellml:units="mmol">106.636560</cn>
+  <cn cellml:units="mmol">206.118002</cn></vector>
 <!-- Only a small number of realisations given for brevity;
      in a real model, far more would probably be given. -->
       </vector>
