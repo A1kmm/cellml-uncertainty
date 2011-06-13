@@ -77,6 +77,10 @@
 
 <section>
   <title>Example 1</title>
+  <para>
+    This simple example has an uncertain variable, myUncertainVar, which is drawn from a distribution specified using the probability density function for the normal distribution, around mean parameter muvMean with variance parameter muvVariance. The rendered form is
+<math xmlns='http://www.w3.org/1998/Math/MathML' display='inline'><mi>myUncertainVar</mi><mo>=</mo><mi>distFromDensity</mi><mo stretchy="true">(</mo><mi>x</mi><mo>:</mo><mfrac><mn>1</mn><msqrt><mrow><mn>2</mn><mi>&pi;</mi><mi>muvVariance</mi></mrow></msqrt></mfrac><msup><mi>e</mi> <mfrac><mrow><mo lspace="verythinmathspace" rspace="0em">&minus;</mo><mo stretchy="false">(</mo><mi>x</mi><mo>&minus;</mo><mi>muvMean</mi><msup><mo stretchy="false">)</mo> <mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>muvVariance</mi></mrow></mfrac></msup><mo stretchy="true">)</mo></math>
+  </para>
   <screen><![CDATA[
 <model xmlns="http://www.cellml.org/cellml/1.1#">
   <component name="myComponent">
@@ -139,6 +143,9 @@
 
 <section>
   <title>Example 2</title>
+  <para>
+    This example describes two correlated, uncertain variables for which the probability density function is not given; instead, a series of samples (realisations) from the distribution are provided. In a real model, it would be desirable to provide more realisations than are provided here.
+  </para>
   <screen><![CDATA[
 <model xmlns="http://www.cellml.org/cellml/1.1#">
   <component name="myComponent">
