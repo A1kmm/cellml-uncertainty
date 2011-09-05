@@ -2,8 +2,10 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "docbookx.dtd">
 <article lang="en">
 <articleinfo>
-  <title>Representing uncertainty in CellML : Unofficial working draft</title>
+  <title>A proposed mechanism for representing uncertainty in mathematical models in CellML</title>
 </articleinfo>
+<abstract>
+</abstract>
 <section>
   <title>Application to CellML</title>
   <para>
@@ -39,7 +41,7 @@
 <section>
   <title>The uncertParWithDist operator</title>
   <para>
-    The following MathML csymbol definition URL is declared to exist: <uri>http://www.cellml.org/uncert1#uncertParWithDist</uri>. It may be used as the operator child of a MathML apply element that is the child of a MathML math element, that is in turn the child of a CellML component element.
+    The following MathML csymbol definition URL is declared to exist: <uri>http://www.cellml.org/uncertainty-1#uncertainParameterWithDistribution</uri>. It may be used as the operator child of a MathML apply element that is the child of a MathML math element, that is in turn the child of a CellML component element.
   </para>
   <para>
     The operator takes two parameters. The first parameter shall be a MathML &lt;ci&gt; element, naming the variable corresponding to the uncertain parameter (or alternatively, may be a vector of such &lt;ci&gt; elements). The second parameter shall describe the distribution for that parameter, using one of the mechanisms discussed below.
@@ -52,7 +54,7 @@
 <section>
   <title>The distFromDensity operator</title>
   <para>
-    The following MathML csymbol definition URL is declared to exist: <uri>http://www.cellml.org/uncert1#distFromDensity</uri>.
+    The following MathML csymbol definition URL is declared to exist: <uri>http://www.cellml.org/uncertainty-1#distributionFromDensity</uri>.
   </para>
   <para>
     The operator takes one parameter, which shall be a function of one parameter.
@@ -65,7 +67,7 @@
 <section>
   <title>The distFromRealisations operator</title>
   <para>
-    The following MathML csymbol definition URL is declared to exist: "http://www.cellml.org/uncert1#distFromRealisations".
+    The following MathML csymbol definition URL is declared to exist: "http://www.cellml.org/uncertainty-1#distributionFromRealisations".
   </para>
   <para>
     The operator takes one parameter, which shall be a vector.
@@ -92,11 +94,11 @@
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <apply>
     <csymbol definitionURL=
-       "http://www.cellml.org/uncert1#uncertParWithDist"/>
+       "http://www.cellml.org/uncertainty-1#uncertainParameterWithDistribution"/>
     <ci>myUncertainVar</ci>
     <apply>
       <csymbol definitionURL=
-        "http://www.cellml.org/uncert1#distFromDensity"/>
+        "http://www.cellml.org/uncertainty-1#distributionFromDensity"/>
       <lambda>
         <bvar><ci>x</ci></bvar>
         <apply><times/>
@@ -155,14 +157,14 @@
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <apply>
     <csymbol definitionURL=
-      "http://www.cellml.org/uncert1#uncertParWithDist"/>
+      "http://www.cellml.org/uncertainty-1#uncertainParameterWithDistribution"/>
     <vector>
       <ci>myUncertainVar1</ci>
       <ci>myUncertainVar2</ci>
     </vector>
     <apply>
       <csymbol definitionURL=
-        "http://www.cellml.org/uncert1#distFromRealisations"/>
+        "http://www.cellml.org/uncertainty-1#distributionFromRealisations"/>
       <vector>
 <vector><cn cellml:units="mmol">95.955908</cn>
   <cn cellml:units="mmol">194.757993</cn></vector>
