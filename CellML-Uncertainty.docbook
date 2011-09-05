@@ -39,7 +39,7 @@
   </para>
 </section>
 <section>
-  <title>The uncertParWithDist operator</title>
+  <title>The uncertainParameterWithDistribution operator</title>
   <para>
     The following MathML csymbol definition URL is declared to exist: <uri>http://www.cellml.org/uncertainty-1#uncertainParameterWithDistribution</uri>. It may be used as the operator child of a MathML apply element that is the child of a MathML math element, that is in turn the child of a CellML component element.
   </para>
